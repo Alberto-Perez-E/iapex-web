@@ -20,8 +20,7 @@ export class IngresadosComponent {
     });
   }
 
-  openDetalles(detalles, index) {
+  openDetalles(detalles) {
     this.modal.open(detalles, { size: "lg" });
-    this.indx = index;
   }
 }
