@@ -1,0 +1,344 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-header">
+        <h4 class="card-title">Registros de Instituciones</h4>
+        <!-- Agregar -->
+        <ng-template #contenido let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Agregar institución</h4>
+            <!-- Modal agregar institución -->
+            <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="Nombre">Nombre de la Institución</label>
+                    <input type="text" maxlength="100" class="form-control" id="institutionNombre"
+                      [(ngModel)]="Nombre_institucion" name="Nombre_institucion">
+                    <small>{{ NombreInstitucionError }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="Direccion">Dirección</label>
+                    <input type="text" maxlength="500" class="form-control" id="institutionDireccion"
+                      [(ngModel)]="Direccion" name="Direccion">
+                    <small>{{ DireccionError }}</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="Estado">Estado</label>
+                    <select name="estado" class="form-control" id="institutionEstado" [(ngModel)]="Estado" name="Estado" (change)="seleccionarEstado($event)">
+                      <option value="Aguascalientes">Aguascalientes</option>
+                      <option value="Baja California">Baja California</option>
+                      <option value="Baja California Sur">Baja California Sur</option>
+                      <option value="Campeche">Campeche</option>
+                      <option value="Chiapas">Chiapas</option>
+                      <option value="Chihuahua">Chihuahua</option>
+                      <option value="CDMX">Ciudad de México</option>
+                      <option value="Coahuila">Coahuila</option>
+                      <option value="Colima">Colima</option>
+                      <option value="Durango">Durango</option>
+                      <option value="Estado de México">Estado de México</option>
+                      <option value="Guanajuato">Guanajuato</option>
+                      <option value="Guerrero">Guerrero</option>
+                      <option value="Hidalgo">Hidalgo</option>
+                      <option value="Jalisco">Jalisco</option>
+                      <option value="Michoacán">Michoacán</option>
+                      <option value="Morelos">Morelos</option>
+                      <option value="Nayarit">Nayarit</option>
+                      <option value="Nuevo León">Nuevo León</option>
+                      <option value="Oaxaca">Oaxaca</option>
+                      <option value="Puebla">Puebla</option>
+                      <option value="Querétaro">Querétaro</option>
+                      <option value="Quintana Roo">Quintana Roo</option>
+                      <option value="San Luis Potosí">San Luis Potosí</option>
+                      <option value="Sinaloa">Sinaloa</option>
+                      <option value="Sonora">Sonora</option>
+                      <option value="Tabasco">Tabasco</option>
+                      <option value="Tamaulipas">Tamaulipas</option>
+                      <option value="Tlaxcala">Tlaxcala</option>
+                      <option value="Veracruz">Veracruz</option>
+                      <option value="Yucatán">Yucatán</option>
+                      <option value="Zacatecas">Zacatecas</option>
+                    </select>
+                    <small>{{ EstadoError }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="Ciudad">Ciudad</label>
+                    <select name="ciudad" class="form-control" id="institutionCiudad" [(ngModel)]="ciudad" name="ciudad">
+                      <option *ngFor="let ciudad of ciudades; let index=index" value="{{ciudad}}">
+                        {{ciudad}}
+                      </option>
+                    </select>
+                    <small>{{ CiudadError }}</small>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="CodigoPostal">Código Postal</label>
+                    <input type="text" maxlength="5" class="form-control" id="institutionCodigoPostal"
+                      [(ngModel)]="Codigo_postal" name="Codigo_postal">
+                    <small>{{ CPError }}</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="IdRepresentante">ID Representante</label>
+                    <select name="idRepresentante" class="form-control" id="institutionIdRepresentante"
+                      [(ngModel)]="Id_user" name="Id_user">
+                      <option *ngFor="let user of user; let index=index" value="{{user.id}}">{{user.nombre}}</option>
+                    </select>
+                    <small>{{ IdUserError }}</small>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-cancelar btn-round" (click)="clear()" (click)="modal.close()">Cancelar</button>
+            <button type="button" class="btn btn-confirmar btn-round"
+              (click)="CreateInstitution(validar)">Guardar</button>
+          </div>
+        </ng-template>
+
+        <button type="button" class="btn btn-agregar btn-round" (click)="openSM(contenido)"><i class="fa fa-plus"></i>
+          Agregar institución</button>
+      </div>
+
+      <!-- Cuerpo de tabla -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                #
+              </th>
+              <th class="text-center">
+                Nombre de la Institución
+              </th>
+              <th class="text-center">
+                Dirección
+              </th>
+              <th class="text-center">
+                Estado
+              </th>
+              <th class="text-center">
+                Ciudad
+              </th>
+              <th class="text-center">
+                Código Postal
+              </th>
+              <th class="text-center">
+                ID Representante
+              </th>
+              <th class="text-center">
+                Editar
+              </th>
+              <th class="text-center">
+                Borrar
+              </th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let institution of institution; let index=index">
+                <th scope="row">{{index +1}}</th>
+                <td class="text-center">
+                  {{institution.nombre_institucion}}
+                </td>
+                <td class="text-center">
+                  {{institution.direccion}}
+                </td>
+                <td class="text-center">
+                  {{institution.estado}}
+                </td>
+                <td class="text-center">
+                  {{institution.ciudad}}
+                </td>
+                <td class="text-center">
+                  {{institution.codigo_postal}}
+                </td>
+                <td class="text-center">
+                  {{institution.id_user}}
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-editar btn-round btn-icon"
+                    (click)="openUp(update, index)"><i class="fa fa-pencil"></i></button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-borrar btn-round btn-icon"
+                    (click)="openDl(borrar, index )"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+
+              <!-- Modal para borrar -->
+              <ng-template #borrar let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">¿Está seguro de que desea eliminar este registro?</h4>
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>El registro de {{institution[indx].nombre_institucion}} se eliminará de la base de datos.
+                  </h4>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-cancelar btn-round" (click)="modal.close()">Cancelar</button>
+                  <button type="button" class="btn btn-confirmar btn-round"
+                    (click)="deleteInstitution(institution[indx].id, indx)">Confirmar</button>
+                </div>
+              </ng-template>
+
+              <!-- Editar -->
+              <ng-template #update let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Editar Institución</h4>
+                  <!-- Modal Editar Institución -->
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="Nombre">Nombre de la Institución</label>
+                          <input type="text" maxlength="100" class="form-control" id="institutionNombre"
+                            value="{{institution[indx].Nombre_institucion}}" [(ngModel)]="Nombre_institucion"
+                            name="Nombre_institucion">
+                          <small>{{ NombreInstitucionError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="Direccion">Dirección</label>
+                          <input type="text" maxlength="500" class="form-control" id="institutionDireccion"
+                            value="{{institution[indx].Direccion}}" [(ngModel)]="Direccion" name="Direccion">
+                          <small>{{ DireccionError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="Estado">Estado</label>
+                          <select name="estado" class="form-control" id="institutionEstado"
+                            value="{{institution[indx].Estado}}" [(ngModel)]="Estado" namne="Estado" (change)="seleccionarEstado($event)">
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="CDMX">Ciudad de México</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
+                            <option value="Estado de México">Estado de México</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="Michoacán">Michoacán</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo León">Nuevo León</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Querétaro">Querétaro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potosí">San Luis Potosí</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucatán">Yucatán</option>
+                            <option value="Zacatecas">Zacatecas</option>
+                          </select>
+                          <small>{{ EstadoError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label for="Ciudad">Ciudad</label>
+                          <select name="ciudad" class="form-control" id="institutionCiudad" value="{{institution[indx].Ciudad}}" [(ngModel)]="ciudad" name="ciudad">
+                            <option *ngFor="let ciudad of ciudades; let index=index" value="{{ciudad}}">
+                              {{ciudad}}
+                            </option>
+                          </select>
+                          <small>{{ CiudadError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="CodigoPostal">Código Postal</label>
+                          <input type="text" maxlength="5" class="form-control" id="institutionCodigoPostal"
+                            value="{{institution[indx].Codigo_postal}}" [(ngModel)]="Codigo_postal"
+                            name="Codigo_postal">
+                          <small>{{ CPError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="IdRepresentante">ID Representante</label>
+                          <select name="idRepresentante" class="form-control" id="institutionIdRepresentante"
+                            value="{{institution[indx].Id_user}}" [(ngModel)]="Id_user" name="Id_user">
+                            <option *ngFor="let user of user; let index=index" value="{{user.id}}">{{user.nombre}}
+                            </option>
+                          </select>
+                          <small>{{ IdUserError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-cancelar btn-round" (click)="clear()" (click)="modal.close()">Cancelar</button>
+                  <button type="button" class="btn btn-confirmar btn-round"
+                    (click)="updateInstitution(institution[indx].id)">Guardar</button>
+                </div>
+              </ng-template>
+
+              <!-- pon bien los datos -->
+              <ng-template #validar let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Datos incorrectos</h4>
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Por favor ingresa los datos correspondientes</h4>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-confirmar btn-round" (click)="modal.close()">Confirmar</button>
+                </div>
+              </ng-template>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

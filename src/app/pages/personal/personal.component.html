@@ -1,0 +1,412 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Registros de Usuarios</h4>
+
+        <!-- Agregar -->
+        <ng-template #contenido let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Agregar usuario</h4>
+            <!-- Modal agregar usuario -->
+            <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <form>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="Nombre">Nombre</label>
+                      <input type="text" maxlength="100" class="form-control" [(ngModel)]="nombre" name="nombre">
+                      <small>{{ NombreError }}</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ApellidoPaterno">Apellido Paterno</label>
+                      <input type="text" maxlength="100" class="form-control" [(ngModel)]="Apellido_paterno"
+                        name="Apellido_paterno">
+                      <small>{{ ApPaternoError }}</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ApellidoMaterno">Apellido Materno</label>
+                      <input type="text" maxlength="100" class="form-control" [(ngModel)]="Apellido_materno"
+                        name="Apellido_materno">
+                      <small>{{ ApMaternoError }}</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="CorreoElectronico">Correo Electrónico</label>
+                      <input type="text" maxlength="500" class="form-control" [(ngModel)]="Correo" name="Correo">
+                      <small>{{ CorreoError }}</small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="Contrasena">Contraseña</label>
+                      <input type="text" maxlength="100" class="form-control" [(ngModel)]="Contrasena"
+                        name="Contraseña">
+                      <small>{{ ContrasenaError }}</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="Telefono">Teléfono</label>
+                      <input type="text" maxlength="10" class="form-control" [(ngModel)]="Telefono" name="Telefono">
+                      <small>{{ TelefonoError }}</small>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label for="CURP">CURP</label>
+                      <input type="text" maxlength="18" class="form-control" [(ngModel)]="Curp" name="Curp">
+                      <small>{{ CURPError }}</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="FechaNacimiento">Fecha de Nacimiento</label>
+                      <input type="date" class="form-control" [(ngModel)]="Fecha_nacimiento" name="Fecha_nacimiento">
+                      <small>{{ FechaNacimientoError }}</small>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label for="INE">INE</label>
+                      <input type="text" maxlength="30" class="form-control" [(ngModel)]="Ine" name="Ine">
+                      <small>{{ INEError }}</small>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-cancelar btn-round" (click)="clear()" (click)="modal.close()">Cancelar</button>
+            <button type="button" class="btn btn-confirmar btn-round" (click)="imprimo(validar)">Guardar</button>
+          </div>
+        </ng-template>
+
+        <button type="button" class="btn btn-agregar btn-round" (click)="openSMA(contenido)"><i class="fa fa-plus"></i>
+          Agregar usuario</button>
+      </div>
+      <!-- Cuerpo de tabla -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                #
+              </th>
+              <th class="text-center">
+                Nombre
+              </th>
+              <th class="text-center">
+                Apellido Paterno
+              </th>
+              <th class="text-center">
+                Apellido Materno
+              </th>
+              <th class="text-center">
+                Correo Electrónico
+              </th>
+              <th class="text-center">
+                Teléfono
+              </th>
+              <th class="text-center">
+                CURP
+              </th>
+              <!-- <th class="text-center">
+                INE
+              </th>
+              <th class="text-center">
+                Fecha de Nacimiento
+              </th>
+              <th class="text-center">
+                Creado en
+              </th>
+              <th class="text-center">
+                Modificado en
+              </th> -->
+              <th class="text-center">
+                Detalles
+              </th>
+              <th class="text-center">
+                Editar
+              </th>
+              <th class="text-center">
+                Borrar
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of user; let index=index">
+                <th scope="row">{{index+1}}</th>
+                <td class="text-center">
+                  {{user.nombre}}
+                </td>
+                <td class="text-center">
+                  {{user.apellido_paterno}}
+                </td>
+                <td class="text-center">
+                  {{user.apellido_materno}}
+                </td>
+                <td class="text-center">
+                  {{user.correo}}
+                </td>
+                <td class="text-center">
+                  {{user.telefono}}
+                </td>
+                <td class="text-center">
+                  {{user.curp}}
+                </td>
+                <!-- <td class="text-center">
+                  {{user.ine}}
+                </td>
+                <td class="text-center">
+                  {{user.fecha_nacimiento}}
+                </td>
+                <td class="text-center">
+                  {{user.creado_en}}
+                </td>
+                <td class="text-center">
+                  {{user.modificado_en}}
+                </td> -->
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-detalles btn-round btn-icon"
+                    (click)="openDetalles(detalles, index)"><i class="fa fa-eye"></i></button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-editar btn-round btn-icon"
+                    (click)="openUp(update, index)"><i class="fa fa-pencil"></i></button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-borrar btn-round btn-icon"
+                    (click)="openDl(borrar, index )"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+
+              <!-- Detalles -->
+              <ng-template #detalles let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Detalles del Usuario</h4>
+                  <!-- Modal Detalles del Usuario -->
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="Nombre">Nombre: {{user[indx].nombre}}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="ApellidoPaterno">Apellido Paterno: {{user[indx].apellido_paterno}}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="ApellidoMaterno">Apellido Materno: {{user[indx].apellido_materno}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="CorreoElectronico">Correo Electrónico: {{user[indx].correo}}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="Contrasena">Contraseña: {{user[indx].contrasena}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="Telefono">Teléfono: {{user[indx].telefono}}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="CURP">CURP: {{user[indx].curp}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="FechaNacimiento">Fecha de Nacimiento: 1995-05-12</label>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="INE">INE: {{user[indx].ine}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </ng-template>
+
+              <!-- Modal para borrar -->
+              <ng-template #borrar let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">¿Está seguro de que desea eliminar este registro?</h4>
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>El registro del usuario {{user[indx].nombre}} se eliminará de la base de datos.</h4>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-cancelar btn-round" (click)="modal.close()">Cancelar</button>
+                  <button type="button" class="btn btn-confirmar btn-round"
+                    (click)="deleteEmployee(user[indx].id, indx)">Confirmar</button>
+                </div>
+              </ng-template>
+
+              <!-- Editar -->
+              <ng-template #update let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Editar Usuario</h4>
+                  <!-- Modal Editar Institucion -->
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="Nombre">Nombre</label>
+                          <input type="text" maxlength="100" class="form-control" id="userNombre"
+                            value="{{user[indx].nombre}}" [(ngModel)]="nombre" name="nombre">
+                          <small>{{ NombreError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="ApellidoPaterno">Apellido Paterno</label>
+                          <input type="text" maxlength="100" class="form-control" id="userApellidoPaterno"
+                            value="{{user[indx].Apellido_paterno}}" [(ngModel)]="Apellido_paterno"
+                            name="Apellido_paterno">
+                          <small>{{ ApPaternoError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="ApellidoMaterno">Apellido Materno</label>
+                          <input type="text" maxlength="100" class="form-control" id="userApellidoMaterno"
+                            value="{{user[indx].apellido_materno}}" [(ngModel)]="Apellido_materno"
+                            name="Apellido_materno">
+                          <small>{{ ApMaternoError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="CorreoElectronico">Correo Electrónico</label>
+                          <input type="text" maxlength="500" class="form-control" id="userCorreoElectronico"
+                            [(ngModel)]="Correo" name="Correo" value="{{user[indx].correo}}">
+                          <small>{{ CorreoError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="Contrasena">Contraseña</label>
+                          <input type="text" maxlength="100" class="form-control" id="userContrasena"
+                            value="{{user[indx].contrasena}}" [(ngModel)]="Contrasena" name="Contrasena">
+                          <small>{{ ContrasenaError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="Telefono">Teléfono</label>
+                          <input type="text" maxlength="10" class="form-control" value="{{Telefono}}"
+                            [(ngModel)]="Telefono" name="Telefono">
+                          <small>{{ TelefonoError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="CURP">CURP</label>
+                          <input type="text" maxlength="18" class="form-control" id="userCURP"
+                            value="{{user[indx].curp}}" [(ngModel)]="Curp" name="Curp">
+                          <small>{{ CURPError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="FechaNacimiento">Fecha de Nacimiento</label>
+                          <input type="date" class="form-control" id="userFechaNacimiento"
+                            value="{{user[indx].fecha_nacimiento}}" [(ngModel)]="Fecha_nacimiento"
+                            name="Fecha_nacimiento">
+                          <small>{{ FechaNacimientoError }}</small>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label for="INE">INE</label>
+                          <input type="text" maxlength="30" class="form-control" id="userINE" [(ngModel)]="Ine"
+                            value="{{user[indx].ine}}" name="Ine">
+                          <small>{{ INEError }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-cancelar btn-round" (click)="clear()" (click)="modal.close()">Cancelar</button>
+                  <button type="button" class="btn btn-confirmar btn-round"
+                    (click)="updateEmployee(user[indx].id, user[indx])">Guardar</button>
+                </div>
+              </ng-template>
+              <!-- pon los datos bien -->
+              <ng-template #validar let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title">Datos incorrectos</h4>
+                  <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>{{ErroMessage}}</h4>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-confirmar btn-round" (click)="modal.close()">Confirmar</button>
+                </div>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

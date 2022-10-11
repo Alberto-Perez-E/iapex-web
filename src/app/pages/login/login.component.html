@@ -1,0 +1,34 @@
+<div class="login-container">
+    <div class="login">
+        <div class="card">
+            <div class="card-body">
+    
+                <div class="login-form-header">
+                    <p>
+                        <img src="assets/img/iapex-logo.svg">
+                        <b><span style="color: #1cb0f6">IA</span><span style="color: #2b70c9">PEX</span></b> Web
+                    </p>
+                </div>
+    
+                <form>
+                    <div class="form-group">
+                        <label for="Nombre">Correo Electrónico</label>
+                        <input type="text" maxlength="500" class="form-control" [(ngModel)]="correo" name="Correo">
+                        <small>{{correoError}}</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="Contrasena">Contraseña</label>
+                        <input type="password" maxlength="100" class="form-control" [(ngModel)]="contrasena" name="Contrasena">
+                        <small>{{contrasenaError}}</small>
+                    </div>
+                    <!-- <a href="" style="color: #66615b">¿Has olvidado tu contraseña?</a> -->
+                </form>
+                
+                <div class="login-form-button">
+                    <button type="button" class="btn btn-confirmar btn-round" (click)="iniciarSesion()">Iniciar sesión</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Registros de Ingresados</h4>
+        </div>
+        <!-- Cuerpo de tabla -->
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  #
+                </th>
+                <th class="text-center">
+                  Nombre
+                </th>
+                <th class="text-center">
+                  Apellido Paterno
+                </th>
+                <th class="text-center">
+                  Apellido Materno
+                </th>
+                <th class="text-center">
+                  Edad
+                </th>
+                <th class="text-center">
+                  Detalles
+                </th>
+                <!-- <th class="text-center">
+                  Borrar
+                </th> -->
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let ingresado of ingresados; let index=index"> -->
+                  <th scope="row">1</th>
+                  <td class="text-center">
+                    Luis
+                  </td>
+                  <td class="text-center">
+                    Romero
+                  </td>
+                  <td class="text-center">
+                    Quinto
+                  </td>
+                  <td class="text-center">
+                    21
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-outline-detalles btn-round btn-icon"
+                      (click)="openDetalles(detalles, index)"><i class="fa fa-eye"></i></button>
+                  </td>
+                  <!-- <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-outline-borrar btn-round btn-icon"
+                      (click)="openDl(borrar, index)"><i class="fa fa-trash"></i></button>
+                  </td> -->
+                <!-- </tr> -->
+  
+                <!-- Detalles -->
+                <ng-template #detalles let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detalles del Ingresado</h4>
+                    <!-- Modal Detalles del Ingresado -->
+                    <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Nombre">Nombre: Luis</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="ApellidoPaterno">Apellido Paterno: Romero</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="ApellidoMaterno">Apellido Materno: Quinto</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Estatura">Estatura (cm): 164</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Edad">Edad: 21</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Peso">Peso (Kg): 78</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Sexo">Sexo: Masculino</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="Contextura">Contextura: Robusto</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="ColorCara">Color de cara: Morena</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="ContornoCara">Contorno de cara: Redondo</label>
+                          </div>
+                        </div>
+                        <div class="col-md-9">
+                          <div class="form-group">
+                            <label for="ParticularidadCara">Particularidad en cara: Ninguna</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="ColorCabello">Color de cabello: Negro</label>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="LongitudCabello">Longitud de cabello: Corto</label>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="Calvicie">Calvicie: No</label>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </ng-template>
+  
+                <!-- Modal para borrar -->
+                <!-- <ng-template #borrar let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title">¿Está seguro de que desea eliminar este registro?</h4>
+                    <button class="close btn-cancelar" aria-label="close" type="button" (click)="modal.dismiss()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <h4>El registro del paciente {{ingresado[indx].nombre}} se eliminará de la base de datos.</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-cancelar btn-round" (click)="modal.close()">Cancelar</button>
+                    <button type="button" class="btn btn-confirmar btn-round"
+                      (click)="deleteEmployee(user[indx]._id.$oid, indx)">Confirmar</button>
+                  </div>
+                </ng-template> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </div>
